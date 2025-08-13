@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap');
+
+body, .app {
+  direction: rtl;
+  font-family: 'Heebo', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  color: #333;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.time-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+  background-color: #e0e0e0;
+  flex-wrap: wrap;
+}
+.time-buttons button {
+  border: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background-color: #bdbdbd;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+.time-buttons button.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+.kpi-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.kpi {
+  flex: 1;
+  background: linear-gradient(135deg, #ffffff, #e3f2fd);
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  min-height: 120px;
+}
+.kpi-controls {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: flex;
+  gap: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.kpi:hover .kpi-controls {
+  opacity: 1;
+}
+.kpi-label {
+  grid-column: 3 / span 1;
+  grid-row: 3 / span 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  font-size: 0.9em;
+  font-weight: 400;
+  color: #555;
+  padding: 4px;
+  text-align: right;
+  word-break: break-word;
+}
+.kpi-number {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5em;
+  font-weight: 700;
+  color: #1976d2;
+  line-height: 1;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  padding: 10px;
+  overflow: hidden;
+}
+.chart, .table-container {
+  background: linear-gradient(135deg, #ffffff, #f1f8e9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.chart h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+.chart {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.table-container {
+  flex: 1;
+  overflow-y: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(135deg, #ffffff, #fce4ec);
+}
+table th, table td {
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.9em;
+}
+table th {
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
+  color: white;
+  font-weight: 700;
+}
+
+/* Floating box */
+.floating-box {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #f5f5f5;
+  border: 3px solid #555;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  padding: 15px;
+  border-radius: 8px;
+}
+.floating-box a {
+  display: block;
+  margin: 5px 0;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, #ffeb3b, #fbc02d);
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* simple row to sit KPIs next to actions (wrap on small screens) */
+.layout-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+/* actions panel */
+.actions-card {
+  flex: 0 0 320px;
+  background: linear-gradient(135deg, #ffffff, #fff9c4);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions-card h3 {
+  margin: 0 0 6px 0;
+}
+
+.actions-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #eceff1;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #ffeb3b, #fbc02d);
+  font-weight: 700;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.note {
+  font-size: 0.9rem;
+  padding: 8px;
+  border-radius: 6px;
+  background: #eceff1;
+}
+
+.note.ok {
+  background: #e8f5e9;
+  border: 1px solid #81c784;
+}
+
+.note.err {
+  background: #ffebee;
+  border: 1px solid #e57373;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #607d8b;
+}
