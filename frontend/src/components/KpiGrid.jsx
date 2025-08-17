@@ -6,30 +6,41 @@ function KpiGrid() {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | loading | error
 
+  async function load(from, to) {
+    setStatus('loading');
+    try {
+      const json = await apiGet('/api/kpis', { from, to });
+      setData(json.kpis);
+      setStatus('idle');
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
+  }
+
   useEffect(() => {
     let mounted = true;
-    setStatus('loading');
-    apiGet('/api/kpi')
-      .then((json) => {
-        if (mounted) {
-          setData(json);
-          setStatus('idle');
-        }
+    // initial: try thisWeek
+    apiGet('/api/time-periods/presets', { tz: 'Asia/Jerusalem' })
+      .then(p => {
+        if (!mounted) return;
+        const sel = p.presets?.thisWeek || p.presets?.today;
+        load(sel?.from, sel?.to);
       })
-      .catch((err) => {
-        console.error(err);
-        if (mounted) setStatus('error');
-      });
-    return () => { mounted = false; };
+      .catch(()=> load());
+
+    const handler = (e) => load(e.detail?.from, e.detail?.to);
+    window.addEventListener('range:change', handler);
+    return () => { mounted = false; window.removeEventListener('range:change', handler); };
   }, []);
 
   if (status === 'loading') {
     return (
       <section className="kpi-container">
-        <Kpi label="שיחות היום" value="…" />
-        <Kpi label="אחוזי הצלחה" value="…" />
-        <Kpi label="לידים חדשים" value="…" />
-        <Kpi label="משך שיחה ממוצע" value="…" />
+        <Kpi label="שיחות" value="..." />
+        <Kpi label="אחוזי הצלחה" value="..." />
+        <Kpi label="לידים חדשים" value="..." />
+        <Kpi label="משך שיחה ממוצע" value="..." />
       </section>
     );
   }
@@ -45,13 +56,12 @@ function KpiGrid() {
     );
   }
 
-  // Map backend fields → KPIs you already display
-  const { callsToday = 52, successRate = 38, leads = 17, avgCallDuration = '03:12' } = data;
+  const { totalCalls = 0, answerRatePct = 0, leads = 0, avgCallDuration = '00:00' } = data;
 
   return (
     <section className="kpi-container">
-      <Kpi label="שיחות היום" value={String(callsToday)} />
-      <Kpi label="אחוזי הצלחה" value={`${successRate}%`} />
+      <Kpi label="שיחות" value={String(totalCalls)} />
+      <Kpi label="אחוזי הצלחה" value={`${answerRatePct}%`} />
       <Kpi label="לידים חדשים" value={String(leads)} />
       <Kpi label="משך שיחה ממוצע" value={avgCallDuration} />
     </section>

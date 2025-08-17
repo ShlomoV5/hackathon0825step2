@@ -1,49 +1,49 @@
+import { useState } from 'react';
 import './App.css';
 import TimeButtons from './components/TimeButtons';
 import KpiGrid from './components/KpiGrid';
-import ChartCard from './components/ChartCard';
+import ChartsDashboard from './components/ChartsDashboard';
 import ResultsTable from './components/ResultsTable';
 import FloatingBox from './components/FloatingBox';
-import CallActions from './components/CallActions';
+import LeadsBox from './components/LeadsBox';
+import Onboarding from './components/Onboarding';
+import FullscreenModal from './components/FullscreenModal';
 
 function App() {
+  const [onbOpen, setOnbOpen] = useState(false);
+
   return (
     <div className="app">
-      <header>דאשבורד מכירות AI</header>
+      <header>
+        דאשבורד מכירות AI
+        <button className="btn onb-launch" onClick={() => setOnbOpen(true)}>
+          התחלת קליטת לקוח <span className="arrow">←</span>
+        </button>
+      </header>
+
       <TimeButtons />
-      <div className="layout-row">
+
+      {/* First: KPIs */}
+      <section className="kpis-row">
         <KpiGrid />
-        <CallActions />
-      </div>
-      <div className="main-content">
-        <ChartCard
-          title="גרף שיחות (7 ימים)"
-          type="line"
-          data={{
-            labels: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'],
-            datasets: [{
-              label: 'שיחות',
-              data: [5, 12, 9, 15, 7, 18, 10],
-              borderColor: '#1976d2',
-              backgroundColor: 'rgba(25, 118, 210, 0.2)',
-              fill: true
-            }]
-          }}
-        />
-        <ChartCard
-          title="חלוקת תוצאות שיחה"
-          type="pie"
-          data={{
-            labels: ['נסגר', 'חם', 'לא ענה', 'לא רלוונטי'],
-            datasets: [{
-              data: [12, 7, 5, 3],
-              backgroundColor: ['#4caf50', '#2196f3', '#9e9e9e', '#ff9800']
-            }]
-          }}
-        />
-        <ResultsTable />
-      </div>
-      <FloatingBox />
+      </section>
+
+      {/* Second: Calls (left/RTL) + Charts (right) */}
+      <section className="panel dashboard-box">
+        <div className="dashboard-grid">
+          <div className="list"><ResultsTable /></div>
+          <div className="charts"><ChartsDashboard /></div>
+        </div>
+      </section>
+
+      {/* Floating boxes */}
+      <FloatingBox />        {/* left: project data (existing) */}
+      <LeadsBox />    {/* right: leads box */}
+
+      {/* Fullscreen Onboarding Modal */}
+      <FullscreenModal open={onbOpen} onClose={() => setOnbOpen(false)} title="קליטת לקוח">
+        <Onboarding />
+      </FullscreenModal>
     </div>
   );
 }

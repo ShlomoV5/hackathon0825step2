@@ -19,6 +19,10 @@ header {
   font-size: 1.5em;
   font-weight: 700;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .time-buttons {
@@ -80,9 +84,9 @@ header {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  font-size: 0.9em;
-  font-weight: 400;
-  color: #555;
+  font-size: 1.1em;   /* was 0.9em */
+  font-weight: 700;   /* was 400 */
+  color: #111;        /* darker, stronger */
   padding: 4px;
   text-align: right;
   word-break: break-word;
@@ -106,25 +110,34 @@ header {
   padding: 10px;
   overflow: hidden;
 }
-.chart, .table-container {
+
+.chart {
   background: linear-gradient(135deg, #ffffff, #f1f8e9);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .chart h3 {
   margin-top: 0;
   margin-bottom: 15px;
 }
-.chart {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+
+/* Fixed, stable drawing area for Chart.js */
+.chart .chart-inner {
+  position: relative;
+  height: 360px;          /* <- set desired chart height here */
 }
-.table-container {
-  flex: 1;
-  overflow-y: auto;
+
+/* Let Chart.js canvas fill the inner box, not grow the page */
+.chart canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -163,15 +176,6 @@ table th {
   text-align: center;
   border-radius: 5px;
   font-weight: bold;
-}
-
-/* simple row to sit KPIs next to actions (wrap on small screens) */
-.layout-row {
-  display: flex;
-  gap: 10px;
-  align-items: stretch;
-  padding: 10px;
-  flex-wrap: wrap;
 }
 
 /* actions panel */
@@ -243,3 +247,71 @@ table th {
   font-size: 0.85rem;
   color: #607d8b;
 }
+
+/* Panel (boxed section) */
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 16px;
+  margin: 0 16px 16px;
+}
+
+/* Charts + Calls grid inside a panel */
+.dashboard-box .dashboard-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* Floating boxes on both sides */
+.floating-box.right { right: 20px; left: auto; }
+
+/* Header button */
+.btn.onb-launch {
+  background: #1976d2; color: #fff; border: none;
+  padding: 10px 14px; border-radius: 12px; font-weight: 700; cursor: pointer;
+}
+.btn.onb-launch .arrow { margin-inline-start: 6px; }
+
+/* Fullscreen modal */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display: flex; align-items: stretch; justify-content: center; z-index: 1000;
+}
+.modal-shell {
+  width: 100vw; height: 100vh; background: #f0f2f5;
+  display: flex; flex-direction: column;
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; background: #1976d2; color: #fff;
+}
+.modal-close { background: transparent; border: none; color: #fff; font-size: 20px; cursor: pointer; }
+.modal-body { flex: 1 1 auto; overflow: auto; }
+
+/* Floating panel (bottom-right) */
+.leads-floating {
+  position: fixed; right: 20px; bottom: 20px; width: 440px; z-index: 1000;
+  background: #fff; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.2);
+  overflow: hidden;
+}
+/* Wikipedia-like header with caret */
+.leads-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; font-weight: 800; cursor: pointer; user-select: none;
+  border-bottom: 1px solid #e0e0e0; background: #fff;
+}
+.leads-header .title { margin: 0; }
+.leads-header .caret { font-size: 16px; line-height: 1; }
+
+.leads-body { max-height: 60vh; overflow: auto; }
+.leads-actions { padding: 8px 12px; border-bottom: 1px solid #eee; }
+.leads-table { padding: 8px 12px; }
+.leads-table table { width: 100%; border-collapse: collapse; }
+.leads-table th, .leads-table td { padding: 8px; border-bottom: 1px solid #f0f0f0; text-align: right; }
+.leads-table td.notes { max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.btn.add { background: #2e7d32; color: #fff; border: none; padding: 6px 10px; border-radius: 10px; }
+.btn.call { background: #1976d2; color: #fff; border: none; padding: 6px 10px; border-radius: 10px; }
