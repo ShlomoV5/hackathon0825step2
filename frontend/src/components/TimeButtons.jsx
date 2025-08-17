@@ -38,7 +38,6 @@ function TimeButtons() {
       <button className={active==='yesterday'?'active':''} onClick={()=>select('yesterday')}>אתמול</button>
       <button className={active==='thisWeek'?'active':''} onClick={()=>select('thisWeek')}>השבוע</button>
       <button className={active==='thisMonth'?'active':''} onClick={()=>select('thisMonth')}>החודש</button>
-      <button className={active==='custom'?'active':''} onClick={()=>select('custom')}>מותאם</button>
     </div>
   );
 }
