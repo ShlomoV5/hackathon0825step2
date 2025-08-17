@@ -52,7 +52,7 @@ LLM_API_KEY=sk-...
 AGENT_FAKE_MODE=0
 ```
 
-3. Start ngrok (recommended for Twilio webhooks)
+3. Start ngrok (recommended for Twilio webhooks - needs to install ngrok first, and sign up to get an authtoken)
 ```
 ngrok http 5000
 # copy the https://... forwarding URL and put it in PUBLIC_BASE_URL
