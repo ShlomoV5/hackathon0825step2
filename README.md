@@ -1,6 +1,4 @@
-# hackathon0825step2
-
-Compact README for the hackathon submission — architecture, what we implemented, what remains, and how to run.
+# AI Sales agent Dashboard + Phone call maker
 
 ## Overview
 This is a small Node/Express + Vite React project: a mock CRM and voice agent that can call leads using Twilio and run a conversational agent (either a local fake flow or a real LLM-driven flow).
